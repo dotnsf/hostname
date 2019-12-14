@@ -3,20 +3,15 @@ var express = require( 'express' ),
     fs = require( 'fs' ),
     app = express();
 
-app.use( express.static( __dirname + '/public' ) );
-
-app.set( 'views', __dirname + '/views' );
-app.set( 'view engine', 'ejs' );
-
-
 app.get( '/', function( req, res ){
-  var hostname = fs.readFileSync( '/etc/hostname' );
+  res.contentType( 'text/plain; charset=utf-8' );
   fs.readFile( '/etc/hostname', "utf-8", function( err, text ){
     if( err ){
-      console.log( err );
-      res.render( 'index', { hostname: JSON.stringify( err ) } );
+      res.write( JSON.stringify( err, 2, null ) );
+      res.end();
     }else{
-      res.render( 'index', { hostname: text } );
+      res.write( text );
+      res.end();
     }
   });
 });

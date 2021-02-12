@@ -1,7 +1,7 @@
 # https://nodejs.org/ja/docs/guides/nodejs-docker-webapp/
 
 # base image
-FROM arm32v7/node:10
+FROM node:10
 
 # working directory
 WORKDIR /usr/src/app
@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8080
 CMD ["node", "app.js"]
 
 

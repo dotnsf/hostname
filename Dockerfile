@@ -1,7 +1,7 @@
 # https://nodejs.org/ja/docs/guides/nodejs-docker-webapp/
 
 # base image
-FROM node:10
+FROM node:12-alpine
 
 # working directory
 WORKDIR /usr/src/app

@@ -1,6 +1,6 @@
 {
     "name": "hostname",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "scripts": {
         "start": "node app.js"
     },
@@ -9,6 +9,6 @@
     },
     "repository": {},
     "engines": {
-        "node": "10.x"
+        "node": "12.x"
     }
 }

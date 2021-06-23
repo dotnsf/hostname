@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hostname
+spec:
+  selector:
+    app: hostname
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostname
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostname
+  template:
+    metadata:
+      labels:
+        app: hostname
+    spec:
+      containers:
+      - name: hostname
+        image: dotnsf/hostname
+        ports:
+        - containerPort: 8080
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: hostname.yourcluster-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-0000.jp-tok.containers.appdomain.cloud
+spec:
+  tls:
+  - hosts:
+    - hostname.yourcluster-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-0000.jp-tok.containers.appdomain.cloud
+    secretName: yourcluster-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-0000
+  rules:
+  - host: hostname.yourcluster-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-0000.jp-tok.containers.appdomain.cloud
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hostname
+          servicePort: 8080
